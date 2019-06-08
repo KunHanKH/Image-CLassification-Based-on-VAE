@@ -22,6 +22,31 @@ bce = torch.nn.BCEWithLogitsLoss(reduction='none')
 # what you're doing
 ################################################################################
 
+'''
+Args:
+    m: numpy array: (batch, ...): Mean
+    v: numpy array: (batch, ...): Variance
+Returns:
+    resample_mean: resampled mean
+    resample_var: resampled variance
+'''
+def resample(m, v):
+    for i in range(5):
+        if i == 0:
+            resample_z = sample_gaussian(means, variances)
+        else:
+            resample_z = np.concatenate((resample_z, sample_gaussian(means, variances)), axis=0)    
+            
+    resample_mean = np.mean(resample_z, axis = 0)
+    resample_var = np.var(resample_z, axis = 0)
+    return resample_mean, resample_var
+
+def sample_normal_gaussian(m, v):
+#     eps = np.random.rand(*v.shape)
+#     z = m + np.sqrt(v) * eps
+    z = np.random.normal(m, v)
+    return z
+
 def sample_gaussian(m, v):
     """
     Element-wise application reparameterization trick to sample from Gaussian
