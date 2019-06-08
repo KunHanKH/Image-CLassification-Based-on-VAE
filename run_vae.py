@@ -49,30 +49,31 @@ for i in range(5):
     print('labels:', labels)
 
 # train_loader, labeled_subset, _ = ut.get_mnist_data(device, use_test_subset=True)
-# vae = VAE(z_dim=args.z, name=model_name).to(device)
 
-# if args.train:
-#     writer = ut.prepare_writer(model_name, overwrite_existing=True)
-#     train(model=vae,
-#           train_loader=train_loader,
-#           labeled_subset=labeled_subset,
-#           device=device,
-#           tqdm=tqdm.tqdm,
-#           writer=writer,
-#           iter_max=args.iter_max,
-#           iter_save=args.iter_save)
-#     ut.evaluate_lower_bound(vae, labeled_subset, run_iwae=args.train == 2)
-#
-# else:
-#     ut.load_model_by_name(vae, global_step=args.iter_max)
-#     ut.evaluate_lower_bound(vae, labeled_subset, run_iwae=True)
-#     # ut.evaluate_lower_bound(vae, labeled_subset, run_iwae=args.train == 2)
-#     x = vae.sample_x(200)
-#     x = x.view(20, 10, 28, 28).cpu().detach().numpy()
-#     fig, axes = plt.subplots(20, 10)
-#     for i in range(10):
-#         for j in range(10):
-#             axes[i, j].imshow(x[i][j])
-#             axes[i, j].set_xticks([])
-#             axes[i, j].set_yticks([])
-#     plt.show()
+vae = VAE(z_dim=args.z, name=model_name).to(device)
+
+if args.train:
+    writer = ut.prepare_writer(model_name, overwrite_existing=True)
+    train(model=vae,
+          train_loader=train_loader,
+          labeled_subset=labeled_subset,
+          device=device,
+          tqdm=tqdm.tqdm,
+          writer=writer,
+          iter_max=args.iter_max,
+          iter_save=args.iter_save)
+    ut.evaluate_lower_bound(vae, labeled_subset, run_iwae=args.train == 2)
+
+else:
+    ut.load_model_by_name(vae, global_step=args.iter_max)
+    ut.evaluate_lower_bound(vae, labeled_subset, run_iwae=True)
+    # ut.evaluate_lower_bound(vae, labeled_subset, run_iwae=args.train == 2)
+    x = vae.sample_x(200)
+    x = x.view(20, 10, 28, 28).cpu().detach().numpy()
+    fig, axes = plt.subplots(20, 10)
+    for i in range(10):
+        for j in range(10):
+            axes[i, j].imshow(x[i][j])
+            axes[i, j].set_xticks([])
+            axes[i, j].set_yticks([])
+    plt.show()

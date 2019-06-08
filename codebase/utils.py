@@ -346,8 +346,8 @@ def save_model_by_name(model, global_step):
 
 
 def prepare_writer(model_name, overwrite_existing=False):
-    log_dir = os.path.join('logs', model_name)
-    save_dir = os.path.join('checkpoints', model_name)
+    log_dir = os.path.join('../logs', model_name)
+    save_dir = os.path.join('../checkpoints', model_name)
     if overwrite_existing:
         delete_existing(log_dir)
         delete_existing(save_dir)
