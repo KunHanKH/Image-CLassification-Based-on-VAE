@@ -7,6 +7,7 @@ from codebase.models.gmvae import GMVAE
 from codebase.train import train
 from pprint import pprint
 from torchvision import datasets, transforms
+import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument('--z',         type=int, default=10,    help="Number of latent dimensions")
@@ -45,3 +46,12 @@ if args.train:
 else:
     ut.load_model_by_name(gmvae, global_step=args.iter_max)
     ut.evaluate_lower_bound(gmvae, labeled_subset, run_iwae=True)
+    x = gmvae.sample_x(200)
+    x = x.view(20, 10, 28, 28).cpu().detach().numpy()
+    fig, axes = plt.subplots(20, 10)
+    for i in range(10):
+        for j in range(10):
+            axes[i, j].imshow(x[i][j])
+            axes[i, j].set_xticks([])
+            axes[i, j].set_yticks([])
+    plt.show()

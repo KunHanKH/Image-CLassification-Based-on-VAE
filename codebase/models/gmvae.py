@@ -16,6 +16,7 @@ class GMVAE(nn.Module):
         self.dec = nn.Decoder(self.z_dim)
 
         # Mixture of Gaussians prior
+        # Each Gaussian distribution is no longer a uniform normal distribution but a random gaussian distribution
         self.z_pre = torch.nn.Parameter(torch.randn(1, 2 * self.k, self.z_dim)
                                         / np.sqrt(self.k * self.z_dim))
         # Uniform weighting
@@ -47,6 +48,16 @@ class GMVAE(nn.Module):
         ################################################################################
         # Compute the mixture of Gaussian prior
         prior = ut.gaussian_parameters(self.z_pre, dim=1)
+
+        m, v = self.enc.encode(x)
+        z = ut.sample_gaussian(m, v)
+        logits = self.dec.decode(z)
+
+        kl = ut.log_normal(z, m, v) - ut.log_normal_mixture(z, *prior)
+        rec = -ut.log_bernoulli_with_logits(x, logits)
+        nelbo = kl + rec
+
+        nelbo, kl, rec = nelbo.mean(), kl.mean(), rec.mean()
         ################################################################################
         # End of code modification
         ################################################################################
@@ -75,13 +86,28 @@ class GMVAE(nn.Module):
         ################################################################################
         # Compute the mixture of Gaussian prior
         prior = ut.gaussian_parameters(self.z_pre, dim=1)
+
+        m, v = self.enc.encode(x)
+        m = ut.duplicate(m, iw)
+        v = ut.duplicate(v, iw)
+        x = ut.duplicate(x, iw)
+        z = ut.sample_gaussian(m, v)
+        logits = self.dec.decode(z)
+
+        kl = ut.log_normal(z, m, v) - ut.log_normal_mixture(z, *prior)
+        rec = -ut.log_bernoulli_with_logits(x, logits)
+        nelbo = kl + rec
+        niwae = -ut.log_mean_exp(-nelbo.reshape(iw, -1), dim=0)
+
+        niwae, kl, rec = niwae.mean(), kl.mean(), rec.mean()
+
         ################################################################################
         # End of code modification
         ################################################################################
         return niwae, kl, rec
 
     def loss(self, x):
-        nelbo, kl, rec = self.negative_elbo_bound(x)
+        nelbo, kl, rec = self.negative_iwae_bound(x, 10)
         loss = nelbo
 
         summaries = dict((
@@ -103,6 +129,10 @@ class GMVAE(nn.Module):
 
     def sample_z(self, batch):
         m, v = ut.gaussian_parameters(self.z_pre.squeeze(0), dim=0)
+
+        # Among all the mix Gaussian distribution, sample batch size z
+        # For each a, which distribution it belongs to is sampled by a categorical distribution.
+
         idx = torch.distributions.categorical.Categorical(self.pi).sample((batch,))
         m, v = m[idx], v[idx]
         return ut.sample_gaussian(m, v)

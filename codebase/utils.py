@@ -8,6 +8,7 @@ from codebase.models.ssvae import SSVAE
 from codebase.models.vae import VAE
 from torch.nn import functional as F
 from torchvision import datasets, transforms
+from codebase.MNIST_individual import MNIST_individual
 
 bce = torch.nn.BCEWithLogitsLoss(reduction='none')
 
@@ -29,6 +30,8 @@ def sample_gaussian(m, v):
     Args:
         m: tensor: (batch, ...): Mean
         v: tensor: (batch, ...): Variance
+        The first dimension of m and v is batch, that is because each data gets through the encoder model,
+        generate a new mean and variance. m and v is the output of the encoder part.
 
     Return:
         z: tensor: (batch, ...): Samples
@@ -37,6 +40,10 @@ def sample_gaussian(m, v):
     # TODO: Modify/complete the code here
     # Sample z
     ################################################################################
+    # since normal distribution with 0 covariance, each dimension follows an individual N(0, 1)
+
+    temp = torch.randn_like(m)
+    z = m + torch.sqrt(v) * temp
 
     ################################################################################
     # End of code modification
@@ -65,6 +72,9 @@ def log_normal(x, m, v):
     # the last dimension
     ################################################################################
 
+    element_wise = -0.5 * (torch.log(v) + (x - m).pow(2) / v + np.log(2 * np.pi))
+    log_prob = element_wise.sum(-1)
+
     ################################################################################
     # End of code modification
     ################################################################################
@@ -74,6 +84,7 @@ def log_normal(x, m, v):
 def log_normal_mixture(z, m, v):
     """
     Computes log probability of a uniformly-weighted Gaussian mixture.
+    The second part of the KL divergence
 
     Args:
         z: tensor: (batch, dim): Observations
@@ -88,6 +99,14 @@ def log_normal_mixture(z, m, v):
     # Compute the uniformly-weighted mixture of Gaussians density for each sample
     # in the batch
     ################################################################################
+
+    # (batch, dim) -> (batch, 1, dim)
+    z = z.unsqueeze(1)
+    # (batch, 1, dim) -> (batch, mix, dim) -> (batch, mix)
+    # Each value in the second dimension represents a single normal distribution
+    log_prob = log_normal(z, m, v)
+    # get the mean of the log normal distribution
+    log_prob = log_mean_exp(log_prob, dim=1)
 
     ################################################################################
     # End of code modification
@@ -147,6 +166,10 @@ def kl_cat(q, log_q, log_p):
 
 
 def kl_normal(qm, qv, pm, pv):
+
+    # check https://stats.stackexchange.com/questions/7440/kl-divergence-between-two-univariate-gaussians
+    # to see how the kl divergence calculated between two normal distributions
+
     """
     Computes the elem-wise KL divergence between two normal distributions KL(q || p) and
     sum over the last dimension
@@ -190,6 +213,9 @@ def log_mean_exp(x, dim):
     Return:
         _: tensor: (...): log(mean(exp(x), dim))
     """
+
+    # np.log(x.size(dim)) is the K in the KL formula of gmvae
+    # log_sum_exp(x, dim) is the sum of log mixture normal distributions
     return log_sum_exp(x, dim) - np.log(x.size(dim))
 
 
@@ -204,6 +230,9 @@ def log_sum_exp(x, dim=0):
     Return:
         _: tensor: (...): log(sum(exp(x), dim))
     """
+
+    # use max_x make it more stable, just like the max value we used in softmax
+
     max_x = torch.max(x, dim)[0]
     new_x = x - max_x.unsqueeze(dim).expand_as(x)
     return max_x + (new_x.exp().sum(dim)).log()
@@ -260,7 +289,7 @@ def evaluate_lower_bound(model, labeled_test_subset, run_iwae=True):
     print("NELBO: {}. KL: {}. Rec: {}".format(nelbo, kl, rec))
 
     if run_iwae:
-        for iw in [1, 10, 100, 1000]:
+        for iw in [1, 10, 100]:
             repeat = max(100 // iw, 1) # Do at least 100 iterations
             fn = lambda x: model.negative_iwae_bound(x, iw)
             niwae, kl, rec = compute_metrics(fn, repeat)
@@ -327,12 +356,15 @@ def reset_weights(m):
 
 def get_mnist_data(device, use_test_subset=True):
     preprocess = transforms.ToTensor()
+    train_set = datasets.MNIST('../MNIST-data', train=True, download=True, transform=preprocess)
+    test_set = datasets.MNIST('../MNIST-data', train=False, download=True, transform=preprocess)
+
     train_loader = torch.utils.data.DataLoader(
-        datasets.MNIST('data', train=True, download=True, transform=preprocess),
+        train_set,
         batch_size=100,
         shuffle=True)
     test_loader = torch.utils.data.DataLoader(
-        datasets.MNIST('data', train=False, download=True, transform=preprocess),
+        test_set,
         batch_size=100,
         shuffle=True)
 
@@ -422,3 +454,18 @@ class FixedSeed:
 
     def __exit__(self, exc_type, exc_value, traceback):
         np.random.set_state(self.state)
+
+
+def generate_individual_set_loader(data_set):
+    data_set_image_individual = [data_set.train_data[data_set.train_labels == i].unsqueeze(dim=1) for i in range(10)]
+    data_set_label_individual = [data_set.train_labels[data_set.train_labels == i] for i in range(10)]
+
+    data_set_individual = [MNIST_individual(data_set_image_individual[i], data_set_label_individual[i]) for i in
+                           range(10)]
+
+    data_loader_individual = [torch.utils.data.DataLoader(
+        data_set_individual[i],
+        batch_size=10,
+        shuffle=True) for i in range(10)]
+
+    return data_set_individual, data_loader_individual

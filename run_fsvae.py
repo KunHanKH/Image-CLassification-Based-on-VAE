@@ -7,11 +7,13 @@ from codebase.models.fsvae import FSVAE
 from codebase.train import train
 from pprint import pprint
 from torchvision import datasets, transforms
+import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument('--iter_max',  type=int, default=1000000, help="Number of training iterations")
+parser.add_argument('--iter_max',  type=int, default=100000, help="Number of training iterations")
 parser.add_argument('--iter_save', type=int, default=10000,   help="Save model every n iterations")
 parser.add_argument('--run',       type=int, default=0,       help="Run ID. In case you want to run replicates")
+parser.add_argument('--train',     type=int, default=1,     help="Flag for training")
 args = parser.parse_args()
 layout = [
     ('model={:s}',  'fsvae'),
@@ -24,14 +26,28 @@ print('Model name:', model_name)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 train_loader, labeled_subset, test_set = ut.get_svhn_data(device)
 fsvae = FSVAE(name=model_name).to(device)
-writer = ut.prepare_writer(model_name, overwrite_existing=True)
 
-train(model=fsvae,
-      train_loader=train_loader,
-      labeled_subset=labeled_subset,
-      device=device,
-      y_status='fullsup',
-      tqdm=tqdm.tqdm,
-      writer=writer,
-      iter_max=args.iter_max,
-      iter_save=args.iter_save)
+if args.train:
+    writer = ut.prepare_writer(model_name, overwrite_existing=True)
+    train(model=fsvae,
+          train_loader=train_loader,
+          labeled_subset=labeled_subset,
+          device=device,
+          y_status='fullsup',
+          tqdm=tqdm.tqdm,
+          writer=writer,
+          iter_max=args.iter_max,
+          iter_save=args.iter_save)
+    ut.evaluate_lower_bound(fsvae, labeled_subset, run_iwae=args.train == 2)
+else:
+    ut.load_model_by_name(fsvae, global_step=args.iter_max)
+    ut.evaluate_lower_bound(fsvae, labeled_subset, run_iwae=True)
+    x = fsvae.sample_x(200)
+    x = x.view(20, 10, 28, 28).cpu().detach().numpy()
+    fig, axes = plt.subplots(20, 10)
+    for i in range(10):
+        for j in range(10):
+            axes[i, j].imshow(x[i][j])
+            axes[i, j].set_xticks([])
+            axes[i, j].set_yticks([])
+    plt.show()

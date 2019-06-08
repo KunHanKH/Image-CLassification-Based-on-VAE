@@ -42,6 +42,21 @@ class VAE(nn.Module):
         # Outputs should all be scalar
         ################################################################################
 
+        # the first dimension of m and v is batch
+        # each input data generate a normal distribution
+        m, v = self.enc.encode(x)
+        kl = ut.kl_normal(m, v, self.z_prior_m, self.z_prior_v)
+
+        z = ut.sample_gaussian(m, v)
+        logits = self.dec.decode(z)
+
+        # get p(x|z) since logit is from latent variable z
+        rec = -ut.log_bernoulli_with_logits(x, logits)
+        kl = kl.mean()
+        rec = rec.mean()
+        nelbo = kl + rec
+
+
         ################################################################################
         # End of code modification
         ################################################################################
@@ -69,13 +84,37 @@ class VAE(nn.Module):
         # Outputs should all be scalar
         ################################################################################
 
+        m, v = self.enc.encode(x)
+
+        # m, v -> (batch, dim)
+
+        # (batch, dim) -> (batch*iw, dim)
+        m = ut.duplicate(m, iw)
+        # (batch, dim) -> (batch*iw, dim)
+        v = ut.duplicate(v, iw)
+        # (batch, dim) -> (batch*iw, dim)
+        x = ut.duplicate(x, iw)
+
+        # z -> (batch*iw, dim)
+        z = ut.sample_gaussian(m, v)
+        logits = self.dec.decode(z)
+
+        kl = ut.log_normal(z, m, v) - ut.log_normal(z, self.z_prior_m, self.z_prior_v)
+
+        rec = -ut.log_bernoulli_with_logits(x, logits)
+        nelbo = kl + rec
+        niwae = -ut.log_mean_exp(-nelbo.reshape(iw, -1), dim=0)
+
+        niwae, kl, rec = niwae.mean(), kl.mean(), rec.mean()
+
         ################################################################################
         # End of code modification
         ################################################################################
         return niwae, kl, rec
 
     def loss(self, x):
-        nelbo, kl, rec = self.negative_elbo_bound(x)
+        # nelbo, kl, rec = self.negative_elbo_bound(x)
+        nelbo, kl, rec = self.negative_iwae_bound(x, 10)
         loss = nelbo
 
         summaries = dict((
