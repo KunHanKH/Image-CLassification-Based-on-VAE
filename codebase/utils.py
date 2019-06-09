@@ -483,9 +483,9 @@ class FixedSeed:
         np.random.set_state(self.state)
 
 
-def generate_individual_set_loader(data_set):
-    data_set_image_individual = [data_set.train_data[data_set.train_labels == i].float()/255 for i in range(10)]
-    data_set_label_individual = [data_set.train_labels[data_set.train_labels == i] for i in range(10)]
+def generate_individual_set_loader(device, data_set):
+    data_set_image_individual = [data_set.train_data[data_set.train_labels == i].to(device).float()/255 for i in range(10)]
+    data_set_label_individual = [data_set.train_labels[data_set.train_labels == i].to(device) for i in range(10)]
 
     data_set_individual = [MNIST_individual(data_set_image_individual[i], data_set_label_individual[i]) for i in
                            range(10)]
@@ -499,6 +499,6 @@ def generate_individual_set_loader(data_set):
 
 
 def get_mean_variance(model, dataset):
-    data = dataset.data
+    data = dataset.data.reshape(-1, 784)
     m, v = model.enc.encode(data)
     return [m, v]

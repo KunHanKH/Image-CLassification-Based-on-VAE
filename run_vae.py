@@ -49,7 +49,7 @@ test_set = datasets.MNIST(
 
 train_loader, labeled_subset, _ = ut.get_mnist_data(device, train_set, test_set, use_test_subset=True)
 
-data_set_individual, data_loader_individual = generate_individual_set_loader(train_set)
+data_set_individual, data_loader_individual = generate_individual_set_loader(device, train_set)
 
 vae = VAE(z_dim=args.z, name=model_name, z_prior_m=None, z_prior_v=None).to(device)
 
@@ -58,7 +58,7 @@ vae = VAE(z_dim=args.z, name=model_name, z_prior_m=None, z_prior_v=None).to(devi
 # 1 -> step 1: get the model
 # 2 -> step 2: get mean and variance
 # 3 -> step 3: refine the model
-train_args = 1
+train_args = 2
 
 if train_args == 1:
     writer = ut.prepare_writer(model_name, overwrite_existing=True)
@@ -75,7 +75,13 @@ if train_args == 1:
 elif train_args == 2:
     ut.load_model_by_name(vae, global_step=args.iter_max)
     para_set = [get_mean_variance(vae, data_set_individual[i]) for i in range(10)]
-    
+    for i, set in enumerate(para_set):
+        print('set: {}'.format(i))
+        print("\tmean")
+        print("\t", set[0].shape)
+        print("\tvariance")
+        print("\t", set[1].shape)
+
 
 # else:
 #     ut.load_model_by_name(vae, global_step=args.iter_max)
