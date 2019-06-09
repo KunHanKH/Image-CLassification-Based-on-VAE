@@ -31,12 +31,12 @@ Returns:
     resample_mean: resampled mean
     resample_var: resampled variance
 '''
-def resample(m, v):
-    for i in range(5):
+def resample(batch, m, v):
+    for i in range(batch):
         if i == 0:
-            resample_z = sample_gaussian(means, variances)
+            resample_z = sample_gaussian(m, v)
         else:
-            resample_z = np.concatenate((resample_z, sample_gaussian(means, variances)), axis=0)    
+            resample_z = np.concatenate((resample_z, sample_gaussian(m, v)), axis=0)
             
     resample_mean = np.mean(resample_z, axis = 0)
     resample_var = np.var(resample_z, axis = 0)
