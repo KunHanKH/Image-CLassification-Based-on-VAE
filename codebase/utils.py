@@ -497,5 +497,8 @@ def generate_individual_set_loader(data_set):
 
     return data_set_individual, data_loader_individual
 
-def get_mean_variance(model, dataset):
 
+def get_mean_variance(model, dataset):
+    data = dataset.data
+    m, v = model.enc.encode(data)
+    return m, v
