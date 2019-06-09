@@ -53,7 +53,14 @@ data_set_individual, data_loader_individual = generate_individual_set_loader(tra
 
 vae = VAE(z_dim=args.z, name=model_name, z_prior_m=None, z_prior_v=None).to(device)
 
-if args.train:
+
+# train_args:
+# 1 -> step 1: get the model
+# 2 -> step 2: get mean and variance
+# 3 -> step 3: refine the model
+train_args = 1
+
+if train_args == 1:
     writer = ut.prepare_writer(model_name, overwrite_existing=True)
     train(model=vae,
           train_loader=train_loader,
@@ -65,6 +72,7 @@ if args.train:
           iter_max=args.iter_max,
           iter_save=args.iter_save)
     ut.evaluate_lower_bound(vae, labeled_subset, run_iwae=args.train == 2)
+
 
 # else:
 #     ut.load_model_by_name(vae, global_step=args.iter_max)

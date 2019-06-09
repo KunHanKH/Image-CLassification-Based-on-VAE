@@ -496,3 +496,6 @@ def generate_individual_set_loader(data_set):
         shuffle=True) for i in range(10)]
 
     return data_set_individual, data_loader_individual
+
+def get_mean_variance(model, dataset):
+
