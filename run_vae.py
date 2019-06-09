@@ -74,7 +74,7 @@ if train_args == 1:
     ut.evaluate_lower_bound(vae, labeled_subset, run_iwae=args.train == 2)
 elif train_args == 2:
     ut.load_model_by_name(vae, global_step=args.iter_max)
-    m_set, v_set = [get_mean_variance(vae, data_set_individual) for i in range(10)]
+    para_set = [get_mean_variance(vae, data_set_individual[i]) for i in range(10)]
     
 
 # else:

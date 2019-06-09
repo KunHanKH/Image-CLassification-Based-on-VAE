@@ -501,4 +501,4 @@ def generate_individual_set_loader(data_set):
 def get_mean_variance(model, dataset):
     data = dataset.data
     m, v = model.enc.encode(data)
-    return m, v
+    return [m, v]
