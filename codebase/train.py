@@ -12,6 +12,9 @@ def train(model, train_loader, labeled_subset, device, tqdm, writer,
           iter_max=np.inf, iter_save=np.inf,
           model_name='model', y_status='none', reinitialize=False):
     # Optimization
+
+    print(train_loader.dataset.train_data[0])
+
     if reinitialize:
         model.apply(ut.reset_weights)
     optimizer = optim.Adam(model.parameters(), lr=1e-3)

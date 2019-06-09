@@ -379,10 +379,8 @@ def reset_weights(m):
         pass
 
 
-def get_mnist_data(device, use_test_subset=True):
+def get_mnist_data(device, train_set, test_set, use_test_subset=True):
     preprocess = transforms.ToTensor()
-    train_set = datasets.MNIST('../MNIST-data', train=True, download=True, transform=preprocess)
-    test_set = datasets.MNIST('../MNIST-data', train=False, download=True, transform=preprocess)
 
     train_loader = torch.utils.data.DataLoader(
         train_set,
@@ -393,11 +391,15 @@ def get_mnist_data(device, use_test_subset=True):
         batch_size=100,
         shuffle=True)
 
+    # print(train_loader.dataset.train_data[0])
+
     # Create pre-processed training and test sets
     X_train = train_loader.dataset.train_data.to(device).reshape(-1, 784).float() / 255
     y_train = train_loader.dataset.train_labels.to(device)
     X_test = test_loader.dataset.test_data.to(device).reshape(-1, 784).float() / 255
     y_test = test_loader.dataset.test_labels.to(device)
+
+    # print(train_loader.dataset.train_data[0])
 
     # Create supervised subset (deterministically chosen)
     # This subset will serve dual purpose of log-likelihood evaluation and
@@ -482,7 +484,7 @@ class FixedSeed:
 
 
 def generate_individual_set_loader(data_set):
-    data_set_image_individual = [data_set.train_data[data_set.train_labels == i].unsqueeze(dim=1) for i in range(10)]
+    data_set_image_individual = [data_set.train_data[data_set.train_labels == i].float()/255 for i in range(10)]
     data_set_label_individual = [data_set.train_labels[data_set.train_labels == i] for i in range(10)]
 
     data_set_individual = [MNIST_individual(data_set_image_individual[i], data_set_label_individual[i]) for i in

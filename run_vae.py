@@ -38,24 +38,26 @@ train_set = datasets.MNIST(
     ])
 )
 
+test_set = datasets.MNIST(
+    root='../MNIST-data'
+    ,train=False
+    ,download=True
+    ,transform=transforms.Compose([
+        transforms.ToTensor()
+    ])
+)
+
+train_loader, labeled_subset, _ = ut.get_mnist_data(device, train_set, test_set, use_test_subset=True)
+
 data_set_individual, data_loader_individual = generate_individual_set_loader(train_set)
-for i in range(5):
-    sample = next(iter(data_loader_individual[0]))
-    images, labels = sample
-    grid = torchvision.utils.make_grid(images, nrow=10)
-    plt.figure(i, figsize=(15,15))
-    plt.imshow(np.transpose(grid, (1,2,0)))
-    plt.show()
-    print('labels:', labels)
 
-# train_loader, labeled_subset, _ = ut.get_mnist_data(device, use_test_subset=True)
-
-vae = VAE(z_dim=args.z, name=model_name).to(device)
+vae = VAE(z_dim=args.z, name=model_name, z_prior_m=None, z_prior_v=None).to(device)
 
 if args.train:
     writer = ut.prepare_writer(model_name, overwrite_existing=True)
     train(model=vae,
           train_loader=train_loader,
+          # train_loader=data_loader_individual[0],
           labeled_subset=labeled_subset,
           device=device,
           tqdm=tqdm.tqdm,
@@ -64,16 +66,16 @@ if args.train:
           iter_save=args.iter_save)
     ut.evaluate_lower_bound(vae, labeled_subset, run_iwae=args.train == 2)
 
-else:
-    ut.load_model_by_name(vae, global_step=args.iter_max)
-    ut.evaluate_lower_bound(vae, labeled_subset, run_iwae=True)
-    # ut.evaluate_lower_bound(vae, labeled_subset, run_iwae=args.train == 2)
-    x = vae.sample_x(200)
-    x = x.view(20, 10, 28, 28).cpu().detach().numpy()
-    fig, axes = plt.subplots(20, 10)
-    for i in range(10):
-        for j in range(10):
-            axes[i, j].imshow(x[i][j])
-            axes[i, j].set_xticks([])
-            axes[i, j].set_yticks([])
-    plt.show()
+# else:
+#     ut.load_model_by_name(vae, global_step=args.iter_max)
+#     ut.evaluate_lower_bound(vae, labeled_subset, run_iwae=True)
+#     # ut.evaluate_lower_bound(vae, labeled_subset, run_iwae=args.train == 2)
+#     x = vae.sample_x(200)
+#     x = x.view(20, 10, 28, 28).cpu().detach().numpy()
+#     fig, axes = plt.subplots(20, 10)
+#     for i in range(10):
+#         for j in range(10):
+#             axes[i, j].imshow(x[i][j])
+#             axes[i, j].set_xticks([])
+#             axes[i, j].set_yticks([])
+#     plt.show()

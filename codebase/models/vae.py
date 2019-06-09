@@ -5,7 +5,7 @@ from torch import nn
 from torch.nn import functional as F
 
 class VAE(nn.Module):
-    def __init__(self, nn='v1', name='vae', z_dim=2):
+    def __init__(self, nn='v1', name='vae', z_dim=2, z_prior_m=None, z_prior_v=None):
         super().__init__()
         self.name = name
         self.z_dim = z_dim
@@ -17,8 +17,14 @@ class VAE(nn.Module):
         self.dec = nn.Decoder(self.z_dim)
 
         # Set prior as fixed parameter attached to Module
-        self.z_prior_m = torch.nn.Parameter(torch.zeros(1), requires_grad=False)
-        self.z_prior_v = torch.nn.Parameter(torch.ones(1), requires_grad=False)
+        if z_prior_m == None:
+            self.z_prior_m = torch.nn.Parameter(torch.zeros(1), requires_grad=False)
+        else:
+            self.z_prior_m = z_prior_m
+        if z_prior_v == None:
+            self.z_prior_v = torch.nn.Parameter(torch.ones(1), requires_grad=False)
+        else:
+            self.z_prior_v = z_prior_v
         self.z_prior = (self.z_prior_m, self.z_prior_v)
 
     def negative_elbo_bound(self, x):
