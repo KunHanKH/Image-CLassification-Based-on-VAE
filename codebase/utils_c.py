@@ -31,20 +31,23 @@ Returns:
     resample_mean: resampled mean
     resample_var: resampled variance
 '''
-def resample(batch, m, v):
-    for i in range(batch):
+def resample(n, m, v):
+    m = m.detach().numpy()
+    v = v.detach().numpy()
+    for i in range(n):
         if i == 0:
-            resample_z = sample_gaussian(m, v)
+            resample_z = sample_normal_gaussian(m, v)
         else:
-            resample_z = torch.cat((resample_z, sample_gaussian(m, v)), dim=0)
+            resample_z = np.concatenate((resample_z, sample_normal_gaussian(m, v)), axis=0)
             
-    resample_mean = torch.mean(resample_z, dim = 0)
-    resample_var = torch.var(resample_z, dim = 0)
+    resample_mean = np.mean(resample_z, axis = 0)
+    resample_var = np.var(resample_z, axis = 0)
     return resample_mean, resample_var
 
 def sample_normal_gaussian(m, v):
 #     eps = np.random.rand(*v.shape)
 #     z = m + np.sqrt(v) * eps
+
     z = np.random.normal(m, v)
     return z
 
@@ -483,17 +486,16 @@ class FixedSeed:
         np.random.set_state(self.state)
 
 
-def generate_individual_set_loader(device, data_set, data_individual_length):
+def generate_individual_set_loader(device, data_set):
     data_set_image_individual = [data_set.train_data[data_set.train_labels == i].to(device).float()/255 for i in range(10)]
     data_set_label_individual = [data_set.train_labels[data_set.train_labels == i].to(device) for i in range(10)]
 
-    data_set_individual = [MNIST_individual(data_set_image_individual[i][:data_individual_length],
-                                            data_set_label_individual[i][:data_individual_length])
-                           for i in range(10)]
+    data_set_individual = [MNIST_individual(data_set_image_individual[i], data_set_label_individual[i]) for i in
+                           range(10)]
 
     data_loader_individual = [torch.utils.data.DataLoader(
         data_set_individual[i],
-        batch_size=100,
+        batch_size=10,
         shuffle=True) for i in range(10)]
 
     return data_set_individual, data_loader_individual

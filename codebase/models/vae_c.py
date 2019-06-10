@@ -11,18 +11,18 @@ class VAE(nn.Module):
         self.z_dim = z_dim
         # Small note: unfortunate name clash with torch.nn
         # nn here refers to the specific architecture file found in
-        # codebase/models/nns/*.pyexpa
+        # codebase/models/nns/*.py
         nn = getattr(nns, nn)
         self.enc = nn.Encoder(self.z_dim)
         self.dec = nn.Decoder(self.z_dim)
 
         # Set prior as fixed parameter attached to Module
         if z_prior_m is None:
-            self.z_prior_m = torch.nn.Parameter(torch.zeros(1), requires_grad=False)
+            self.z_prior_m = torch.nn.Parameter(torch.zeros(z_dim), requires_grad=False)
         else:
             self.z_prior_m = z_prior_m
         if z_prior_v is None:
-            self.z_prior_v = torch.nn.Parameter(torch.ones(1), requires_grad=False)
+            self.z_prior_v = torch.nn.Parameter(torch.ones(z_dim), requires_grad=False)
         else:
             self.z_prior_v = z_prior_v
         self.z_prior = (self.z_prior_m, self.z_prior_v)
@@ -47,26 +47,19 @@ class VAE(nn.Module):
         #
         # Outputs should all be scalar
         ################################################################################
-
-        # the first dimension of m and v is batch
-        # each input data generate a normal distribution
         m, v = self.enc.encode(x)
         kl = ut.kl_normal(m, v, self.z_prior_m, self.z_prior_v)
 
         z = ut.sample_gaussian(m, v)
         logits = self.dec.decode(z)
-
-        # get p(x|z) since logit is from latent variable z
         rec = -ut.log_bernoulli_with_logits(x, logits)
-        kl = kl.mean()
-        rec = rec.mean()
         nelbo = kl + rec
-
 
         ################################################################################
         # End of code modification
         ################################################################################
-        return nelbo, kl, rec
+        return nelbo.mean(), kl.mean(), rec.mean()
+
 
     def negative_iwae_bound(self, x, iw):
         """
@@ -118,21 +111,9 @@ class VAE(nn.Module):
         ################################################################################
         return niwae, kl, rec
 
-    def loss_encoder(self, x):
-        m, v = self.enc.encode(x)
-        kl = ut.kl_normal(m, v, self.z_prior_m, self.z_prior_v).mean()
-        # nelbo, kl, rec = self.negative_iwae_bound(x, 10)
-        loss = kl
-
-        summaries = dict((
-            ('gen/kl_z', kl),
-        ))
-
-        return loss, summaries
-
     def loss(self, x):
-        nelbo, kl, rec = self.negative_elbo_bound(x)
-        # nelbo, kl, rec = self.negative_iwae_bound(x, 10)
+        # nelbo, kl, rec = self.negative_elbo_bound(x)
+        nelbo, kl, rec = self.negative_iwae_bound(x, 10)
         loss = nelbo
 
         summaries = dict((
@@ -153,10 +134,9 @@ class VAE(nn.Module):
         return torch.sigmoid(logits)
 
     def sample_z(self, batch):
-        print(self.z_prior[0].expand(batch, self.z_dim).shape)
         return ut.sample_gaussian(
-            self.z_prior[0].expand(batch, self.z_dim),
-            self.z_prior[1].expand(batch, self.z_dim))
+            self.z_prior_m.expand(batch, self.z_dim),
+            self.z_prior_v.expand(batch, self.z_dim))
 
     def sample_x(self, batch):
         z = self.sample_z(batch)
@@ -164,3 +144,11 @@ class VAE(nn.Module):
 
     def sample_x_given(self, z):
         return torch.bernoulli(self.compute_sigmoid_given(z))
+
+    def sample_x_given_latent(self, batch, mean, variance):
+        # print(mean)
+        z = self.sample_z_given_latent(batch, mean, variance)
+        return self.sample_x_given(z)
+
+    def sample_z_given_latent(self, batch, mean, variance):
+        return ut.sample_gaussian(mean.expand(batch, self.z_dim), variance.expand(batch, self.z_dim))
