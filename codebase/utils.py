@@ -5,6 +5,7 @@ import shutil
 import torch
 from codebase.models.gmvae import GMVAE
 from codebase.models.ssvae import SSVAE
+from codebase.models.hkvae import HKVAE
 from codebase.models.vae import VAE
 from torch.nn import functional as F
 from torchvision import datasets, transforms
@@ -271,7 +272,7 @@ def load_model_by_name(model, global_step):
         model: Model: (): A model
         global_step: int: (): Checkpoint iteration
     """
-    file_path = os.path.join('checkpoints',
+    file_path = os.path.join('../checkpoints',
                              model.name,
                              'model-{:05d}.pt'.format(global_step))
     state = torch.load(file_path)
@@ -321,6 +322,36 @@ def evaluate_lower_bound(model, labeled_test_subset, run_iwae=True):
             print("Negative IWAE-{}: {}".format(iw, niwae))
 
 
+def evaluate_lower_bound_HK(model, labeled_test_subset):
+    check_model = isinstance(model, HKVAE)
+    assert check_model, "This function is only intended for HKVAE"
+
+    print('*' * 80)
+    print("LOG-LIKELIHOOD LOWER BOUNDS ON TEST SUBSET")
+    print('*' * 80)
+
+    xl, yl = labeled_test_subset
+    yl = yl.float()
+    torch.manual_seed(0)
+    xl = torch.bernoulli(xl)
+
+    def detach_torch_tuple(args):
+        return (v.detach() for v in args)
+
+    def compute_metrics(fn, repeat):
+        metrics = [0, 0, 0, 0]
+        for _ in range(repeat):
+            nelbo, kl_xy_x, kl_xy_y, rec, m_xy, v_xy = detach_torch_tuple(fn(xl, yl))
+            metrics[0] += nelbo / repeat
+            metrics[1] += kl_xy_x / repeat
+            metrics[2] += kl_xy_y / repeat
+            metrics[3] += rec / repeat
+        return metrics
+
+    # Run multiple times to get low-var estimate
+    nelbo, kl_xy_x, kl_xy_y, rec = compute_metrics(model.negative_elbo_bound, 100)
+    print("NELBO: {}. KL_XY_X: {}. KL_XY_Y: {}. Rec: {}".format(nelbo, kl_xy_x, kl_xy_y, rec))
+
 def evaluate_classifier(model, test_set):
     check_model = isinstance(model, SSVAE)
     assert check_model, "This function is only intended for SSVAE"
@@ -332,6 +363,19 @@ def evaluate_classifier(model, test_set):
     X, y = test_set
     pred = model.cls.classify(X)
     accuracy = (pred.argmax(1) == y).float().mean()
+    print("Test set classification accuracy: {}".format(accuracy))
+
+def evaluate_classifier_HK(model, test_set):
+    check_model = isinstance(model, HKVAE)
+    assert check_model, "This function is only intended for HKVAE"
+
+    print('*' * 80)
+    print("CLASSIFICATION EVALUATION ON ENTIRE TEST SET")
+    print('*' * 80)
+
+    X, y = test_set
+    pred = model.cls_given_x(X)
+    accuracy = (pred == y).float().mean()
     print("Test set classification accuracy: {}".format(accuracy))
 
 

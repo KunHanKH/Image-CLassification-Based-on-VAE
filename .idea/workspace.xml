@@ -2,17 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0300597-07fa-47b9-bb06-12608453cb06" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/codebase/refine.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/codebase/models/hkvae.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/run_hkvae.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Countour Detection and Polygon Approxiamation.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Create dataset and dataloader.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Create dataset and dataloader.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/DecodeGivenCategory-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/DecodeGivenCategory-checkpoint.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DecodeGivenCategory.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/DecodeGivenCategory.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Test.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/checkpoints/model=vae_z=10_run=0000/model-10000.pt" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/model=vae_z=10_run=0000/model-10000.pt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/checkpoints/model=vae_z=10_run=0000/model-20000.pt" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoints/model=vae_z=10_run=0000/model-20000.pt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codebase/models/vae.py" beforeDir="false" afterPath="$PROJECT_DIR$/codebase/models/vae.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codebase/models/nns/v1.py" beforeDir="false" afterPath="$PROJECT_DIR$/codebase/models/nns/v1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codebase/models/ssvae.py" beforeDir="false" afterPath="$PROJECT_DIR$/codebase/models/ssvae.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/codebase/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/codebase/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/codebase/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/codebase/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_vae.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_vae.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,110 +25,128 @@
     <SUITE FILE_PATH="coverage/Image_CLassification_Based_on_VAE$run_vae.coverage" NAME="run_vae Coverage Results" MODIFIED="1560119870978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/codebase/utils.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2657">
-              <caret line="501" column="4" selection-start-line="501" selection-start-column="4" selection-end-line="501" selection-end-column="4" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vae.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/codebase/models/vae.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7">
-              <caret line="125" selection-start-line="125" selection-end-line="125" />
-              <folding>
-                <element signature="e#0#12#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vae_c.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/codebase/models/vae_c.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3874">
-              <caret line="153" selection-start-line="153" selection-end-line="153" />
-              <folding>
-                <element signature="e#0#12#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="v1.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/codebase/models/nns/v1.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="13" column="21" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/codebase/train.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1664">
-              <caret line="72" column="32" selection-start-line="72" selection-start-column="23" selection-end-line="72" selection-end-column="32" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="refine.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/codebase/refine.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="806">
-              <caret line="40" column="54" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="run_vae.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/run_vae.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2210">
-              <caret line="97" column="8" selection-start-line="97" selection-start-column="8" selection-end-line="97" selection-end-column="8" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="utils_c.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/codebase/utils_c.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="676">
-              <caret line="36" column="22" selection-start-line="36" selection-start-column="22" selection-end-line="36" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MNIST_individual.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/codebase/MNIST_individual.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.70509386">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="run_hkvae.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/run_hkvae.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="81">
+                  <caret line="65" column="19" lean-forward="true" selection-start-line="65" selection-start-column="19" selection-end-line="65" selection-end-column="19" />
+                  <folding>
+                    <element signature="e#0#15#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/codebase/utils.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="282">
+                  <caret line="395" column="32" lean-forward="true" selection-start-line="395" selection-start-column="32" selection-end-line="395" selection-end-column="32" />
+                  <folding>
+                    <element signature="e#0#18#0" expanded="true" />
+                    <element signature="e#9424#10596#0" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ssvae.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/codebase/models/ssvae.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-312">
+                  <caret line="21" column="53" selection-start-line="21" selection-start-column="53" selection-end-line="21" selection-end-column="53" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="run_vae.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/run_vae.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="2080">
+                  <caret line="122" column="47" selection-start-line="122" selection-start-column="33" selection-end-line="122" selection-end-column="47" />
+                  <folding>
+                    <element signature="e#0#15#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/codebase/train.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-1491">
+                  <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+                  <folding>
+                    <element signature="e#0#15#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="hkvae.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/codebase/models/hkvae.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="693">
+                  <caret line="119" column="24" selection-start-line="119" selection-start-column="8" selection-end-line="119" selection-end-column="24" />
+                  <folding>
+                    <element signature="e#0#15#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="run_ssvae.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/run_ssvae.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="471">
+                  <caret line="38" column="25" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
+                  <folding>
+                    <element signature="e#0#15#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ssvae.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/codebase/models/ssvae.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="185">
+                  <caret line="82" column="39" selection-start-line="82" selection-start-column="8" selection-end-line="82" selection-end-column="39" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="vae.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/codebase/models/vae.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-1430">
+                  <caret line="59" column="54" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="54" />
+                  <folding>
+                    <element signature="e#0#12#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="v1.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/codebase/models/nns/v1.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1135">
+                  <caret line="52" column="30" selection-start-line="52" selection-start-column="30" selection-end-line="52" selection-end-column="30" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -145,6 +162,7 @@
       <find>generate</find>
       <find>iter_max</find>
       <find>Model_Step1</find>
+      <find>float</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -154,18 +172,21 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/run_gmvae.py" />
-        <option value="$PROJECT_DIR$/codebase/models/ssvae.py" />
         <option value="$PROJECT_DIR$/codebase/models/fsvae.py" />
         <option value="$PROJECT_DIR$/run_fsvae.py" />
         <option value="$PROJECT_DIR$/codebase/models/gmvae.py" />
         <option value="$PROJECT_DIR$/Note.txt" />
         <option value="$PROJECT_DIR$/codebase/MNIST_individual.py" />
-        <option value="$PROJECT_DIR$/codebase/train.py" />
         <option value="$PROJECT_DIR$/codebase/models/vae_c.py" />
-        <option value="$PROJECT_DIR$/codebase/utils.py" />
         <option value="$PROJECT_DIR$/run_vae.py" />
         <option value="$PROJECT_DIR$/codebase/refine.py" />
         <option value="$PROJECT_DIR$/codebase/models/vae.py" />
+        <option value="$PROJECT_DIR$/codebase/models/ssvae.py" />
+        <option value="$PROJECT_DIR$/codebase/models/nns/v1.py" />
+        <option value="$PROJECT_DIR$/codebase/models/hkvae.py" />
+        <option value="$PROJECT_DIR$/codebase/train.py" />
+        <option value="$PROJECT_DIR$/run_hkvae.py" />
+        <option value="$PROJECT_DIR$/codebase/utils.py" />
       </list>
     </option>
   </component>
@@ -178,9 +199,9 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="775" />
-    <option name="width" value="1155" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="950" />
+    <option name="width" value="979" />
     <option name="height" value="1040" />
   </component>
   <component name="ProjectView">
@@ -188,7 +209,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -196,56 +216,11 @@
               <item name="Image-CLassification_Based-on_VAE" type="b2602c69:ProjectViewProjectNode" />
               <item name="Image-CLassification_Based-on_VAE" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Image-CLassification_Based-on_VAE" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Image-CLassification_Based-on_VAE" type="462c0819:PsiDirectoryNode" />
-              <item name="checkpoints" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Image-CLassification_Based-on_VAE" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Image-CLassification_Based-on_VAE" type="462c0819:PsiDirectoryNode" />
-              <item name="checkpoints" type="462c0819:PsiDirectoryNode" />
-              <item name="model=vae_z=10_run=0000" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Image-CLassification_Based-on_VAE" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Image-CLassification_Based-on_VAE" type="462c0819:PsiDirectoryNode" />
-              <item name="checkpoints" type="462c0819:PsiDirectoryNode" />
-              <item name="Model_Step1" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Image-CLassification_Based-on_VAE" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Image-CLassification_Based-on_VAE" type="462c0819:PsiDirectoryNode" />
-              <item name="checkpoints" type="462c0819:PsiDirectoryNode" />
-              <item name="Model_Step3_0" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Image-CLassification_Based-on_VAE" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Image-CLassification_Based-on_VAE" type="462c0819:PsiDirectoryNode" />
-              <item name="checkpoints" type="462c0819:PsiDirectoryNode" />
-              <item name="Model_Step3_3" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Image-CLassification_Based-on_VAE" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Image-CLassification_Based-on_VAE" type="462c0819:PsiDirectoryNode" />
-              <item name="checkpoints" type="462c0819:PsiDirectoryNode" />
-              <item name="Model_Step3_8_0_1" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Image-CLassification_Based-on_VAE" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Image-CLassification_Based-on_VAE" type="462c0819:PsiDirectoryNode" />
-              <item name="codebase" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Image-CLassification_Based-on_VAE" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Image-CLassification_Based-on_VAE" type="462c0819:PsiDirectoryNode" />
-              <item name="codebase" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -308,7 +283,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -318,7 +293,7 @@
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32776934" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49966466" weight="0.06231003" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32928678" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19839142" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.20107238" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="3" />
@@ -337,24 +312,24 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1930295" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49966466" weight="0.2837633" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32776934" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32928678" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50033534" side_tool="true" weight="0.33080426" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="right" id="SciView" order="3" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32776934" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -369,23 +344,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/codebase/models/nns/v1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="936">
-          <caret line="41" column="27" lean-forward="true" selection-start-line="41" selection-start-column="27" selection-end-line="41" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/codebase/models/nns/v2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="23" column="32" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/codebase/models/vae.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1404">
@@ -402,6 +360,7 @@
           <caret line="262" selection-start-line="262" selection-end-line="262" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#9424#10596#0" />
           </folding>
         </state>
       </provider>
@@ -470,6 +429,7 @@
           <caret line="236" column="30" selection-start-line="236" selection-start-column="25" selection-end-line="236" selection-end-column="30" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#9424#10596#0" />
           </folding>
         </state>
       </provider>
@@ -531,6 +491,7 @@
           <caret line="236" column="30" selection-start-line="236" selection-start-column="25" selection-end-line="236" selection-end-column="30" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#9424#10596#0" />
           </folding>
         </state>
       </provider>
@@ -617,13 +578,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codebase/models/ssvae.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
-          <caret line="76" column="34" selection-start-line="76" selection-start-column="34" selection-end-line="76" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
@@ -635,9 +589,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
           <caret line="15" column="85" selection-start-line="15" selection-start-column="85" selection-end-line="15" selection-end-column="85" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -676,30 +627,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codebase/models/nns/v1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="13" column="21" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/codebase/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/codebase/utils_c.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="676">
+        <state relative-caret-position="26">
           <caret line="36" column="22" selection-start-line="36" selection-start-column="22" selection-end-line="36" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codebase/refine.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="539">
+          <caret line="40" column="54" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codebase/models/vae_c.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="409">
+          <caret line="153" selection-start-line="153" selection-end-line="153" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codebase/models/vae.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1430">
+          <caret line="59" column="54" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="54" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codebase/train.py">
+    <entry file="file://$PROJECT_DIR$/codebase/models/nns/v1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1664">
-          <caret line="72" column="32" selection-start-line="72" selection-start-column="23" selection-end-line="72" selection-end-column="32" />
+        <state relative-caret-position="1135">
+          <caret line="52" column="30" selection-start-line="52" selection-start-column="30" selection-end-line="52" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run_ssvae.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="471">
+          <caret line="38" column="25" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
@@ -708,50 +680,58 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/run_vae.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2210">
-          <caret line="97" column="8" selection-start-line="97" selection-start-column="8" selection-end-line="97" selection-end-column="8" />
+        <state relative-caret-position="2080">
+          <caret line="122" column="47" selection-start-line="122" selection-start-column="33" selection-end-line="122" selection-end-column="47" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codebase/refine.py">
+    <entry file="file://$PROJECT_DIR$/codebase/models/ssvae.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="806">
-          <caret line="40" column="54" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
+        <state relative-caret-position="-312">
+          <caret line="21" column="53" selection-start-line="21" selection-start-column="53" selection-end-line="21" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/codebase/models/hkvae.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="693">
+          <caret line="119" column="24" selection-start-line="119" selection-start-column="8" selection-end-line="119" selection-end-column="24" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codebase/models/vae_c.py">
+    <entry file="file://$PROJECT_DIR$/codebase/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3874">
-          <caret line="153" selection-start-line="153" selection-end-line="153" />
+        <state relative-caret-position="-1491">
+          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
           <folding>
-            <element signature="e#0#12#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codebase/models/vae.py">
+    <entry file="file://$PROJECT_DIR$/run_hkvae.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="125" selection-start-line="125" selection-end-line="125" />
+        <state relative-caret-position="81">
+          <caret line="65" column="19" lean-forward="true" selection-start-line="65" selection-start-column="19" selection-end-line="65" selection-end-column="19" />
           <folding>
-            <element signature="e#0#12#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/codebase/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2657">
-          <caret line="501" column="4" selection-start-line="501" selection-start-column="4" selection-end-line="501" selection-end-column="4" />
+        <state relative-caret-position="282">
+          <caret line="395" column="32" lean-forward="true" selection-start-line="395" selection-start-column="32" selection-end-line="395" selection-end-column="32" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#9424#10596#0" />
           </folding>
         </state>
       </provider>

@@ -1,0 +1,66 @@
+(py3.7) G:\CS295\Image-CLassification_Based-on_VAE>python run_hkvae.py
+{'cw': 100,
+ 'gw': 1,
+ 'iter_max': 20000,
+ 'iter_save': 5000,
+ 'kl_xy_xw': 10,
+ 'kl_xy_yw': 10,
+ 'recw': 1,
+ 'run': 0,
+ 'train': 1}
+Model name: model=hkvae_gw=001_cw=100_kl_xy_xw=010_kl_xy_yw=010_recw=001_run=0000
+Loaded from checkpoints\model=hkvae_gw=001_cw=100_kl_xy_xw=010_kl_xy_yw=010_recw=001_run=0000\model-20000.pt
+********************************************************************************
+LOG-LIKELIHOOD LOWER BOUNDS ON TEST SUBSET
+********************************************************************************
+NELBO: 160.36041259765625. KL_XY_X: 0.2526848614215851. KL_XY_Y: 2.2890408039093018. Rec: 134.94320678710938
+********************************************************************************
+CLASSIFICATION EVALUATION ON ENTIRE TEST SET
+********************************************************************************
+Test set classification accuracy: 0.9812999963760376
+
+
+
+(py3.7) G:\CS295\Image-CLassification_Based-on_VAE>python run_hkvae.py
+{'cw': 50,
+ 'gw': 1,
+ 'iter_max': 10000,
+ 'iter_save': 5000,
+ 'kl_xy_xw': 10,
+ 'kl_xy_yw': 30,
+ 'recw': 10,
+ 'run': 0,
+ 'train': 1}
+Model name: model=hkvae_gw=001_cw=050_kl_xy_xw=010_kl_xy_yw=030_recw=010_run=0000
+Loaded from checkpoints\model=hkvae_gw=001_cw=050_kl_xy_xw=010_kl_xy_yw=030_recw=010_run=0000\model-10000.pt
+********************************************************************************
+LOG-LIKELIHOOD LOWER BOUNDS ON TEST SUBSET
+********************************************************************************
+NELBO: 1435.0660400390625. KL_XY_X: 3.4728543758392334. KL_XY_Y: 22.45871353149414. Rec: 72.65756225585938
+********************************************************************************
+CLASSIFICATION EVALUATION ON ENTIRE TEST SET
+********************************************************************************
+Test set classification accuracy: 0.972000002861023
+
+
+
+(py3.7) G:\CS295\Image-CLassification_Based-on_VAE>python run_hkvae.py
+{'cw': 50,
+ 'gw': 1,
+ 'iter_max': 10000,
+ 'iter_save': 5000,
+ 'kl_xy_xw': 10,
+ 'kl_xy_yw': 50,
+ 'recw': 5,
+ 'run': 0,
+ 'train': 1}
+Model name: model=hkvae_gw=001_cw=050_kl_xy_xw=010_kl_xy_yw=050_recw=005_run=0000
+Loaded from checkpoints\model=hkvae_gw=001_cw=050_kl_xy_xw=010_kl_xy_yw=050_recw=005_run=0000\model-10000.pt
+********************************************************************************
+LOG-LIKELIHOOD LOWER BOUNDS ON TEST SUBSET
+********************************************************************************
+NELBO: 1007.5720825195312. KL_XY_X: 1.6896485090255737. KL_XY_Y: 10.58167552947998. Rec: 92.31851959228516
+********************************************************************************
+CLASSIFICATION EVALUATION ON ENTIRE TEST SET
+********************************************************************************
+Test set classification accuracy: 0.9697999954223633

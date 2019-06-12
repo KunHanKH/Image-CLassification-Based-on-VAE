@@ -52,12 +52,13 @@ class SSVAE(nn.Module):
         ################################################################################
         y_logits = self.cls.classify(x)
         y_logprob = F.log_softmax(y_logits, dim=1)
-        y_prob = torch.softmax(y_logprob, dim=1) # (batch, y_dim)
+        y_prob = torch.softmax(y_logits, dim=1) # (batch, y_dim)
 
         # Duplicate y based on x's batch size. Then duplicate x
         # This enumerates all possible combination of x with labels (0, 1, ..., 9)
-        y = np.repeat(np.arange(self.y_dim), x.size(0))
-        y = x.new(np.eye(self.y_dim)[y])
+
+        y = np.repeat(np.arange(self.y_dim), x.size(0))         # y.shape -> (self.y_dim * x.size[0],) -> (0,0,0,0,...,1,1,1,1,...,)
+        y = x.new(np.eye(self.y_dim)[y])                        # y.shape -> (self.y_dim * x.size[0], 10)
         x = ut.duplicate(x, self.y_dim)
 
         m, v = self.enc.encode(x, y)

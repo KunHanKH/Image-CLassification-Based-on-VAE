@@ -17,10 +17,12 @@ def train(model, train_loader, labeled_subset, device, tqdm, writer,
         model.apply(ut.reset_weights)
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
     i = 0
+    j = 0
     with tqdm(total=iter_max) as pbar:
         while True:
             for batch_idx, (xu, yu) in enumerate(train_loader):
                 i += 1 # i is num of gradient steps taken by end of loop iteration
+                j += 1
                 optimizer.zero_grad()
 
                 if y_status == 'none':
@@ -42,6 +44,21 @@ def train(model, train_loader, labeled_subset, device, tqdm, writer,
                     acc = (pred == true).float().mean()
                     summaries['class/acc'] = acc
 
+                elif y_status == 'hk':
+                    if j >= iter_max/5:
+                        j = 0
+                        model.rec_weight += 5
+
+                    xu = torch.bernoulli(xu.to(device).reshape(xu.size(0), -1))
+                    yu = yu.new(np.eye(10)[yu]).to(device).float()
+                    loss, summaries = model.loss(xu, yu)
+
+                    # Add training accuracy computation
+                    pred = model.cls_given_x(xu)
+                    true = yu.argmax(1)
+                    acc = (pred == true).float().mean()
+                    summaries['class/acc'] = acc
+
                 elif y_status == 'fullsup':
                     # Janky code: fullsup is only for SVHN
                     # xu is not bernoulli for SVHN
@@ -57,6 +74,10 @@ def train(model, train_loader, labeled_subset, device, tqdm, writer,
                     pbar.set_postfix(
                         loss='{:.2e}'.format(loss))
                 elif y_status == 'semisup':
+                    pbar.set_postfix(
+                        loss='{:.2e}'.format(loss),
+                        acc='{:.2e}'.format(acc))
+                elif y_status == 'hk':
                     pbar.set_postfix(
                         loss='{:.2e}'.format(loss),
                         acc='{:.2e}'.format(acc))
