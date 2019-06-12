@@ -53,6 +53,9 @@ test_set = datasets.MNIST(
 )
 
 train_loader, labeled_subset, test_set = ut.get_mnist_data(device, train_set, test_set, use_test_subset=True)
+xl, yl = test_set
+yl = torch.unsqueeze(yl, dim=1)
+
 hkvae = HKVAE(
     rec_weight=args.recw,
     kl_xy_x_weight=args.kl_xy_xw,
@@ -73,11 +76,11 @@ if Train:
           writer=writer,
           iter_max=args.iter_max,
           iter_save=args.iter_save)
-
-    ut.evaluate_lower_bound_HK(hkvae, test_set)
-    ut.evaluate_classifier_HK(hkvae, test_set)
 else:
     ut.load_model_by_name(hkvae, args.iter_max)
 
-ut.evaluate_lower_bound_HK(hkvae, labeled_subset)
+xl, yl = test_set
+yl = torch.tensor(np.eye(10)[yl]).float().to(device)
+test_set = (xl, yl)
+ut.evaluate_lower_bound_HK(hkvae, test_set)
 ut.evaluate_classifier_HK(hkvae, test_set)

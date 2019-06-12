@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0300597-07fa-47b9-bb06-12608453cb06" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/codebase/models/hkvae.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run_hkvae.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/DecodeGivenCategory-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/DecodeGivenCategory-checkpoint.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecodeGivenCategory.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/DecodeGivenCategory.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Test.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codebase/models/nns/v1.py" beforeDir="false" afterPath="$PROJECT_DIR$/codebase/models/nns/v1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codebase/models/ssvae.py" beforeDir="false" afterPath="$PROJECT_DIR$/codebase/models/ssvae.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codebase/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/codebase/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/codebase/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/codebase/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run_hkvae.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_hkvae.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,14 +18,14 @@
     <SUITE FILE_PATH="coverage/Image_CLassification_Based_on_VAE$run_vae.coverage" NAME="run_vae Coverage Results" MODIFIED="1560119870978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.70509386">
+    <splitter split-orientation="horizontal" split-proportion="0.599866">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="run_hkvae.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="run_hkvae.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/run_hkvae.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="81">
-                  <caret line="65" column="19" lean-forward="true" selection-start-line="65" selection-start-column="19" selection-end-line="65" selection-end-column="19" />
+                <state relative-caret-position="367">
+                  <caret line="85" column="42" lean-forward="true" selection-start-line="85" selection-start-column="42" selection-end-line="85" selection-end-column="42" />
                   <folding>
                     <element signature="e#0#15#0" expanded="true" />
                   </folding>
@@ -40,11 +33,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/codebase/utils.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="282">
-                  <caret line="395" column="32" lean-forward="true" selection-start-line="395" selection-start-column="32" selection-end-line="395" selection-end-column="32" />
+                <state relative-caret-position="1288">
+                  <caret line="373" column="19" lean-forward="true" selection-start-line="373" selection-start-column="19" selection-end-line="373" selection-end-column="19" />
                   <folding>
                     <element signature="e#0#18#0" expanded="true" />
                     <element signature="e#9424#10596#0" />
@@ -185,8 +178,8 @@
         <option value="$PROJECT_DIR$/codebase/models/nns/v1.py" />
         <option value="$PROJECT_DIR$/codebase/models/hkvae.py" />
         <option value="$PROJECT_DIR$/codebase/train.py" />
-        <option value="$PROJECT_DIR$/run_hkvae.py" />
         <option value="$PROJECT_DIR$/codebase/utils.py" />
+        <option value="$PROJECT_DIR$/run_hkvae.py" />
       </list>
     </option>
   </component>
@@ -199,7 +192,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="950" />
     <option name="width" value="979" />
     <option name="height" value="1040" />
@@ -715,23 +708,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run_hkvae.py">
+    <entry file="file://$PROJECT_DIR$/codebase/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="65" column="19" lean-forward="true" selection-start-line="65" selection-start-column="19" selection-end-line="65" selection-end-column="19" />
+        <state relative-caret-position="1288">
+          <caret line="373" column="19" lean-forward="true" selection-start-line="373" selection-start-column="19" selection-end-line="373" selection-end-column="19" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#9424#10596#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/codebase/utils.py">
+    <entry file="file://$PROJECT_DIR$/run_hkvae.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="395" column="32" lean-forward="true" selection-start-line="395" selection-start-column="32" selection-end-line="395" selection-end-column="32" />
+        <state relative-caret-position="367">
+          <caret line="85" column="42" lean-forward="true" selection-start-line="85" selection-start-column="42" selection-end-line="85" selection-end-column="42" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#9424#10596#0" />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -272,7 +272,7 @@ def load_model_by_name(model, global_step):
         model: Model: (): A model
         global_step: int: (): Checkpoint iteration
     """
-    file_path = os.path.join('../checkpoints',
+    file_path = os.path.join('./checkpoints',
                              model.name,
                              'model-{:05d}.pt'.format(global_step))
     state = torch.load(file_path)
@@ -375,7 +375,7 @@ def evaluate_classifier_HK(model, test_set):
 
     X, y = test_set
     pred = model.cls_given_x(X)
-    accuracy = (pred == y).float().mean()
+    accuracy = (pred == y.argmax(1)).float().mean()
     print("Test set classification accuracy: {}".format(accuracy))
 
 
