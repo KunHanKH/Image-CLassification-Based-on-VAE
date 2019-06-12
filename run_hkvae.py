@@ -15,7 +15,7 @@ parser.add_argument('--recw',            type=int, default=5,        help="Weigh
 parser.add_argument('--kl_xy_xw',        type=int, default=10,       help="Weight on the class term")
 parser.add_argument('--kl_xy_yw',        type=int, default=50,       help="Weight on the generative terms")
 parser.add_argument('--iter_max',       type=int, default=10000,    help="Number of training iterations")
-parser.add_argument('--iter_save',      type=int, default=5000,    help="Save model every n iterations")
+parser.add_argument('--iter_save',      type=int, default=2000,    help="Save model every n iterations")
 parser.add_argument('--run',            type=int, default=0,        help="Run ID. In case you want to run replicates")
 parser.add_argument('--train',          type=int, default=1,        help="Flag for training")
 args = parser.parse_args()
@@ -64,7 +64,7 @@ hkvae = HKVAE(
     class_weight=args.cw,
     name=model_name).to(device)
 
-Train = False
+Train = True
 if Train:
     writer = ut.prepare_writer(model_name, overwrite_existing=True)
     train(model=hkvae,

@@ -272,9 +272,8 @@ def load_model_by_name(model, global_step):
         model: Model: (): A model
         global_step: int: (): Checkpoint iteration
     """
-    file_path = os.path.join('./checkpoints',
-                             model.name,
-                             'model-{:05d}.pt'.format(global_step))
+    file_path = os.path.join('../checkpoints', model.name, 'model-{:05d}.pt'.format(global_step))
+    print(file_path)
     state = torch.load(file_path)
     model.load_state_dict(state)
     print("Loaded from {}".format(file_path))
@@ -380,7 +379,7 @@ def evaluate_classifier_HK(model, test_set):
 
 
 def save_model_by_name(model, global_step):
-    save_dir = os.path.join('checkpoints', model.name)
+    save_dir = os.path.join('../checkpoints', model.name)
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
     file_path = os.path.join(save_dir, 'model-{:05d}.pt'.format(global_step))
@@ -390,8 +389,8 @@ def save_model_by_name(model, global_step):
 
 
 def prepare_writer(model_name, overwrite_existing=False):
-    log_dir = os.path.join('../logs', model_name)
-    save_dir = os.path.join('../checkpoints', model_name)
+    log_dir = os.path.join('./logs', model_name)
+    save_dir = os.path.join('./checkpoints', model_name)
     if overwrite_existing:
         delete_existing(log_dir)
         delete_existing(save_dir)
