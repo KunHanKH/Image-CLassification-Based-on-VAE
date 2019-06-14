@@ -64,3 +64,26 @@ NELBO: 1007.5720825195312. KL_XY_X: 1.6896485090255737. KL_XY_Y: 10.581675529479
 CLASSIFICATION EVALUATION ON ENTIRE TEST SET
 ********************************************************************************
 Test set classification accuracy: 0.9697999954223633
+
+
+
+Loaded from ../checkpoints\model=hkvae_rec_step=010_gw=001_cw=050_kl_xy_xw=025_kl_xy_yw=050_recw=000_run=0000\model-10000.pt
+{'cw': 50,
+ 'gw': 1,
+ 'iter_max': 10000,
+ 'iter_save': 2000,
+ 'kl_xy_xw': 25,
+ 'kl_xy_yw': 50,
+ 'rec_step': 10,
+ 'recw': 0,
+ 'run': 0,
+ 'train': 1}
+Model name: model=hkvae_rec_step=010_gw=001_cw=050_kl_xy_xw=025_kl_xy_yw=050_recw=000_run=0000
+********************************************************************************
+LOG-LIKELIHOOD LOWER BOUNDS ON TEST SUBSET
+********************************************************************************
+NELBO: 783.9049682617188. KL_XY_X: 1.796186089515686. KL_XY_Y: 14.780019760131836. Rec: 82.3485107421875
+********************************************************************************
+CLASSIFICATION EVALUATION ON ENTIRE TEST SET
+********************************************************************************
+Test set classification accuracy: 0.9691999554634094

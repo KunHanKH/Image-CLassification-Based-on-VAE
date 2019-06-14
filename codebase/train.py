@@ -9,7 +9,7 @@ from torch.nn import functional as F
 from torchvision.utils import save_image
 
 def train(model, train_loader, labeled_subset, device, tqdm, writer,
-          iter_max=np.inf, iter_save=np.inf,
+          iter_max=np.inf, iter_save=np.inf, rec_step=10, CNN=False,
           model_name='model', y_status='none', reinitialize=False):
     # Optimization
 
@@ -47,9 +47,11 @@ def train(model, train_loader, labeled_subset, device, tqdm, writer,
                 elif y_status == 'hk':
                     if j >= iter_max/5:
                         j = 0
-                        model.rec_weight += 5
-
-                    xu = torch.bernoulli(xu.to(device).reshape(xu.size(0), -1))
+                        model.rec_weight += rec_step
+                    if CNN:
+                        xu = torch.bernoulli(xu.to(device))
+                    else:
+                        xu = torch.bernoulli(xu.to(device).reshape(xu.size(0), -1))
                     yu = yu.new(np.eye(10)[yu]).to(device).float()
                     loss, summaries = model.loss(xu, yu)
 

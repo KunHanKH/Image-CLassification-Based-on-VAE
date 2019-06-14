@@ -348,8 +348,8 @@ def evaluate_lower_bound_HK(model, labeled_test_subset):
         return metrics
 
     # Run multiple times to get low-var estimate
-    nelbo, kl_xy_x, kl_xy_y, rec = compute_metrics(model.negative_elbo_bound, 100)
-    print("NELBO: {}. KL_XY_X: {}. KL_XY_Y: {}. Rec: {}".format(nelbo, kl_xy_x, kl_xy_y, rec))
+    nelbo, kl_xy_x, kl_xy_y, rec = compute_metrics(model.negative_elbo_bound, 20)
+    print("KL_XY_X: {}. KL_XY_Y: {}. Rec: {}".format(kl_xy_x, kl_xy_y, rec))
 
 def evaluate_classifier(model, test_set):
     check_model = isinstance(model, SSVAE)
@@ -422,7 +422,7 @@ def reset_weights(m):
         pass
 
 
-def get_mnist_data(device, train_set, test_set, use_test_subset=True):
+def get_mnist_data(device, train_set, test_set, use_test_subset=True, CNN=False):
     preprocess = transforms.ToTensor()
 
     train_loader = torch.utils.data.DataLoader(
@@ -437,9 +437,15 @@ def get_mnist_data(device, train_set, test_set, use_test_subset=True):
     # print(train_loader.dataset.train_data[0])
 
     # Create pre-processed training and test sets
-    X_train = train_loader.dataset.train_data.to(device).reshape(-1, 784).float() / 255
+
+    if CNN:
+        X_train = train_loader.dataset.train_data.to(device).reshape(-1, 1, 28, 28).float() / 255
+        X_test = test_loader.dataset.test_data.to(device).reshape(-1, 1, 28, 28).float() / 255
+    else:
+        X_train = train_loader.dataset.train_data.to(device).reshape(-1, 784).float() / 255
+        X_test = test_loader.dataset.test_data.to(device).reshape(-1, 784).float() / 255
+
     y_train = train_loader.dataset.train_labels.to(device)
-    X_test = test_loader.dataset.test_data.to(device).reshape(-1, 784).float() / 255
     y_test = test_loader.dataset.test_labels.to(device)
 
     # print(train_loader.dataset.train_data[0])
@@ -447,6 +453,7 @@ def get_mnist_data(device, train_set, test_set, use_test_subset=True):
     # Create supervised subset (deterministically chosen)
     # This subset will serve dual purpose of log-likelihood evaluation and
     # semi-supervised learning. Pretty hacky. Don't judge :<
+
     X = X_test if use_test_subset else X_train
     y = y_test if use_test_subset else y_train
 
@@ -473,12 +480,12 @@ def get_mnist_index(i, test=True):
                           [151,2723,3531,2930,1207,802,2176,2176,1956,3622],
                           [3560,756,4369,4484,1641,3114,4984,4353,4071,4009],
                           [2105,3942,3191,430,4187,2446,2659,1589,2956,2681],
-                          [4180,2251,4420,4870,1071,4735,6132,5251,5068,1204],
+                          [4180,2251,4420,4870,1071,4735,5251,5251,5068,1204],
                           [3918,1167,1684,3299,2767,2957,4469,560,5425,1605],
                           [5795,1472,3678,256,3762,5412,1954,816,2435,1634]])
 
     test_idx = np.array([[684,559,629,192,835,763,707,359,9,723],
-                         [277,599,1094,600,314,705,551,87,174,849],
+                         [277,599,600,600,314,705,551,87,174,849],
                          [537,845,72,777,115,976,755,448,850,99],
                          [984,177,755,797,659,147,910,423,288,961],
                          [265,697,639,544,543,714,244,151,675,510],
@@ -486,7 +493,7 @@ def get_mnist_index(i, test=True):
                          [756,273,335,388,617,42,442,543,888,257],
                          [57,291,779,430,91,398,611,908,633,84],
                          [203,324,774,964,47,639,131,972,868,180],
-                         [1000,846,143,660,227,954,791,719,909,373]])
+                         [846,846,143,660,227,954,791,719,909,373]])
 
     if test:
         return test_idx[i]

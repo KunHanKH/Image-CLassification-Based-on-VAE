@@ -11,10 +11,10 @@ from torchvision.utils import save_image
 
 class HKVAE(nn.Module):
     def __init__(self, nn='v1', name='ssvae', rec_weight=1, kl_xy_x_weight=10,
-                 kl_xy_y_weight=10, gen_weight=1, class_weight=100):
+                 kl_xy_y_weight=10, gen_weight=1, class_weight=100, CNN = False):
         super().__init__()
         self.name = name
-
+        self.CNN = CNN
         self.x_dim = 784
         self.z_dim = 64
         self.y_dim = 10
@@ -28,9 +28,14 @@ class HKVAE(nn.Module):
 
         nn = getattr(nns, nn)
 
-        self.enc_xy = nn.Encoder(z_dim=self.z_dim, y_dim=self.y_dim, x_dim=self.x_dim)
-        self.enc_x = nn.Encoder(z_dim=self.z_dim, y_dim=0, x_dim=self.x_dim)
-        self.enc_y = nn.Encoder(z_dim=self.z_dim, y_dim=self.y_dim, x_dim=0)
+        if CNN:
+            self.enc_xy = nn.Encoder_XY(z_dim=self.z_dim, y_dim=self.y_dim)
+            self.enc_x = nn.Encoder_X(z_dim=self.z_dim)
+            self.enc_y = nn.Encoder_Y(z_dim=self.z_dim, y_dim=self.y_dim)
+        else:
+            self.enc_xy = nn.Encoder(z_dim=self.z_dim, y_dim=self.y_dim, x_dim=self.x_dim)
+            self.enc_x = nn.Encoder(z_dim=self.z_dim, y_dim=0, x_dim=self.x_dim)
+            self.enc_y = nn.Encoder(z_dim=self.z_dim, y_dim=self.y_dim, x_dim=0)
 
         self.dec = nn.Decoder(z_dim=self.z_dim, y_dim=0, x_dim=self.x_dim)
 
@@ -61,9 +66,14 @@ class HKVAE(nn.Module):
         # Outputs should all be scalar
         ################################################################################
 
-        m_xy, v_xy = self.enc_xy.encode(x, y)
-        m_x, v_x = self.enc_x.encode(x)
-        m_y, v_y = self.enc_y.encode(y)
+        if self.CNN:
+            m_xy, v_xy = self.enc_xy.encode_xy(x, y)
+            m_x, v_x = self.enc_x.encode_x(x)
+            m_y, v_y = self.enc_y.encode_y(y)
+        else:
+            m_xy, v_xy = self.enc_xy.encode(x, y)
+            m_x, v_x = self.enc_x.encode(x)
+            m_y, v_y = self.enc_y.encode(y)
 
         # kl divergence for latent variable z
         kl_xy_x = ut.kl_normal(m_xy, v_xy, m_x, v_x)
@@ -72,6 +82,9 @@ class HKVAE(nn.Module):
         # recreation error
         z = ut.sample_gaussian(m_xy, v_xy)
         x_logits = self.dec.decode(z)
+
+        if self.CNN:
+            x = torch.reshape(x, (x.shape[0], -1))
         rec = -ut.log_bernoulli_with_logits(x, x_logits)
 
         kl_xy_x = kl_xy_x.mean()
@@ -93,8 +106,8 @@ class HKVAE(nn.Module):
 
         # classification error
         # concatenate m_xy, v_xy
-        mv_cat_xy = torch.cat((m, v), dim=1)
-        ce = self.classification_cross_entropy(mv_cat_xy, y)
+        mv_cat_x = torch.cat((m, v), dim=1)
+        ce = self.classification_cross_entropy(mv_cat_x, y)
 
         loss = self.gen_weight * nelbo + self.class_weight * ce
 
@@ -114,16 +127,26 @@ class HKVAE(nn.Module):
         return torch.sigmoid(logits)
 
     def sample_z(self, y):
-        m, v = self.enc_y.encode(y)
+        if self.CNN:
+            m, v = self.enc_y.encode_y(y)
+        else:
+            m, v = self.enc_y.encode(y)
         return ut.sample_gaussian(m, v)
 
     def sample_x_given_y(self, y):
-        m, v = self.enc_y.encode(y)
+        if self.CNN:
+            m, v = self.enc_y.encode_y(y)
+        else:
+            m, v = self.enc_y.encode(y)
         z = ut.sample_gaussian(m, v)
-        return torch.bernoulli(self.compute_sigmoid_given(z))
+        # return torch.bernoulli(self.compute_sigmoid_given(z))
+        return self.compute_sigmoid_given(z)
 
     def cls_given_x(self, x):
-        m, v = self.enc_x.encode(x)
+        if self.CNN:
+            m, v = self.enc_x.encode_x(x)
+        else:
+            m, v = self.enc_x.encode(x)
         mv_cat = torch.cat((m, v), dim=1)
         y_logits = self.cls.classify(mv_cat)
         return y_logits.argmax(1)
